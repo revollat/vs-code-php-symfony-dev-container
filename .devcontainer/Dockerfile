@@ -21,7 +21,7 @@ RUN apt-get update \
     && apt-get -y install --no-install-recommends apt-utils dialog 2>&1 \
     #
     # install git iproute2, procps, lsb-release (useful for CLI installs)
-    && apt-get -y install git iproute2 procps iproute2 lsb-release \
+    && apt-get -y install git iproute2 procps iproute2 lsb-release zip unzip \
     #
     # Install xdebug
     && yes | pecl install xdebug \
@@ -42,6 +42,10 @@ RUN apt-get update \
     && apt-get clean -y \
     && rm -rf /var/lib/apt/lists/*
 
+RUN curl -sS https://getcomposer.org/installer | php
+RUN mv composer.phar /usr/local/bin/composer
+RUN curl -sS https://get.symfony.com/cli/installer | bash 
+RUN mv /root/.symfony/bin/symfony /usr/local/bin/symfony
 # Switch back to dialog for any ad-hoc use of apt-get
 ENV DEBIAN_FRONTEND=dialog
 
